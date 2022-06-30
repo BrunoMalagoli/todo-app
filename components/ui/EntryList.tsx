@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo } from "react";
+import { DragEvent, FC, useContext, useMemo } from "react";
 import { List, Paper } from "@mui/material";
 import { EntryCard } from "./";
 import { EntryStatus } from "../../interfaces";
@@ -14,8 +14,14 @@ export const EntryList: FC<Props> = ({ status }) => {
     () => entries.filter((entry) => entry.status === status),
     [entries, status]
   );
+  const onDropEntry = (event: DragEvent<HTMLDivElement>) => {
+    const id = event.dataTransfer.getData("text");
+  };
+  const allowDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
   return (
-    <div>
+    <div onDrop={onDropEntry} onDragOver={allowDrop}>
       <Paper
         sx={{
           height: "calc(100vh - 250px)",

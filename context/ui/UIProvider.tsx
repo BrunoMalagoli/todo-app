@@ -3,11 +3,13 @@ import { UIContext, UIReducer } from "./";
 export interface UIState {
   sidemenuOpen: boolean;
   isAdding: boolean;
+  isDragging: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
   sidemenuOpen: false,
   isAdding: false,
+  isDragging: false,
 };
 
 export const UIProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -19,9 +21,13 @@ export const UIProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: "UI-Close Sidebar" });
   };
   const setIsAdding = (boolean: boolean) => {
-    boolean
-      ? dispatch({ type: "UI-setIsAdding true" })
-      : dispatch({ type: "UI-setIsAdding false" });
+    dispatch({ type: "UI-setIsAdding", payload: boolean });
+  };
+  const startDragging = () => {
+    dispatch({ type: "UI-Start Dragging" });
+  };
+  const endDragging = () => {
+    dispatch({ type: "UI-End Dragging" });
   };
   return (
     <UIContext.Provider
@@ -30,7 +36,11 @@ export const UIProvider: FC<PropsWithChildren> = ({ children }) => {
         //Metodos
         openSideMenu,
         closeSideMenu,
+
         setIsAdding,
+
+        startDragging,
+        endDragging,
       }}
     >
       {children}

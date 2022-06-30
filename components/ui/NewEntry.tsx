@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
-import { UIContext } from "../../context/ui/UIContext";
+import { UIContext } from "../../context/ui";
 import { EntriesContext } from "../../context/entries";
 export const NewEntry = () => {
   const { isAdding, setIsAdding } = useContext(UIContext);
