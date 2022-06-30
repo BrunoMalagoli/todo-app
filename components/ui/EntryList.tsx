@@ -18,7 +18,7 @@ export const EntryList: FC<Props> = ({ status }) => {
     <div>
       <Paper
         sx={{
-          height: "calc(100vh - 200px)",
+          height: "calc(100vh - 250px)",
           overflow: "scroll",
           backgroundColor: "transparent",
           "&::-webkit-scrollbar": { display: "none" },
