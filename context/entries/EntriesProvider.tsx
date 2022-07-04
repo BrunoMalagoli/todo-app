@@ -42,12 +42,17 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     };
     dispatch({ type: "[Entry] - AddEntry", payload: newEntry });
   };
+
+  const updateEntry = (entry: Entry) => {
+    dispatch({ type: "[Entry] - UpdatedEntry", payload: entry });
+  };
   return (
     <EntriesContext.Provider
       value={{
         ...state,
         //Metodos
         addNewEntry,
+        updateEntry,
       }}
     >
       {children}
