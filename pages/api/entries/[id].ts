@@ -11,7 +11,8 @@ export default function handler(
 ) {
   const { id } = req.query;
   if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: "El id no es valido" });
+    res.status(400).json({ message: "El id no es valido" });
+    return;
   }
   switch (req.method) {
     case "PUT":
@@ -33,6 +34,7 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).json({
         message: "No se encontró una entrada con el siguiente ID: " + id,
       });
+      return;
     }
     res.status(200).json({ message: entryById! });
   } catch (error) {
