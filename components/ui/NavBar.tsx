@@ -1,4 +1,5 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import NextLink from "next/link";
+import { AppBar, IconButton, Link, Toolbar, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { useContext } from "react";
 import { UIContext } from "../../context/ui/UIContext";
@@ -11,7 +12,11 @@ export const NavBar = () => {
         <IconButton size="large" edge="start" onClick={openSideMenu}>
           <MenuRoundedIcon />
         </IconButton>
-        <Typography variant="h6">toDoApp</Typography>
+        <NextLink href={"/"} passHref>
+          <Link underline="none" color={"white"}>
+            <Typography variant="h6">toDoApp</Typography>
+          </Link>
+        </NextLink>
       </Toolbar>
     </AppBar>
   );
