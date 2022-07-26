@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useMemo } from "react";
 import {
   Card,
   Grid,
@@ -24,11 +24,20 @@ export const EntryPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [status, setStatus] = useState<EntryStatus>("pending");
   const [touched, setTouched] = useState(false);
+
+  const isNotValid = useMemo(
+    () => inputValue.length <= 0 && touched,
+    [inputValue, touched]
+  );
+
   const onInputFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
   const onStatusChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setStatus(event.target.value as EntryStatus);
+  };
+  const onSave = () => {
+    console.log({ inputValue, status });
   };
   return (
     <Layout title="...">
@@ -49,6 +58,9 @@ export const EntryPage = () => {
                 label="Nueva entrada"
                 value={inputValue}
                 onChange={onInputFieldChanged}
+                helperText={isNotValid && touched && "Ingrese un valor"}
+                onBlur={() => setTouched(true)}
+                error={isNotValid && touched}
               />
               <FormControl>
                 <FormLabel>Estado:</FormLabel>
@@ -69,6 +81,8 @@ export const EntryPage = () => {
                 startIcon={<SaveRoundedIcon />}
                 fullWidth
                 variant="contained"
+                onClick={onSave}
+                disabled={inputValue.length <= 0}
               >
                 Save
               </Button>
