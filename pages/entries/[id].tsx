@@ -1,4 +1,5 @@
-import { ChangeEvent, useState, useMemo, FC } from "react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useState, useMemo, FC, useContext } from "react";
 import { GetServerSideProps } from "next";
 import {
   Card,
@@ -21,6 +22,8 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { dbEntries } from "../../database";
 import { Layout } from "../../components/layouts";
 import { Entry, EntryStatus } from "../../interfaces";
+import { EntriesContext } from "../../context/entries";
+import { dateFunctions } from "../../utils";
 const validStatus: EntryStatus[] = ["pending", "in-progress", "finished"];
 
 interface Props {
@@ -28,6 +31,8 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({ entry }) => {
+  const router = useRouter();
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
@@ -44,7 +49,18 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     setStatus(event.target.value as EntryStatus);
   };
   const onSave = () => {
-    console.log({ inputValue, status });
+    if (inputValue.trim().length === 0) return;
+    const updatedEntry: Entry = {
+      ...entry,
+      status,
+      description: inputValue,
+    };
+    updateEntry(updatedEntry, true);
+    router.push("/");
+  };
+  const onDelete = () => {
+    deleteEntry(entry);
+    router.push("/");
   };
   return (
     <Layout title={inputValue.substring(0, 20) + "..."}>
@@ -53,7 +69,9 @@ export const EntryPage: FC<Props> = ({ entry }) => {
           <Card>
             <CardHeader
               title={`Entrada:`}
-              subheader={`Creada hace ${entry.createdAt} minutos`}
+              subheader={`Creada ${dateFunctions.getFormatDistanceToNow(
+                entry.createdAt
+              )}`}
             />
             <CardContent>
               <TextField
@@ -104,6 +122,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
           right: 30,
           backgroundColor: "error.dark",
         }}
+        onClick={onDelete}
       >
         <DeleteRoundedIcon />
       </IconButton>

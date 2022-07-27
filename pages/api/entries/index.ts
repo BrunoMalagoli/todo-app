@@ -46,6 +46,4 @@ const postEntry = async (req: NextApiRequest, res: NextApiResponse) => {
       .status(500)
       .json({ message: "Algo salio mal, revisar consola del servidor" });
   }
-
-  return res.status(201).json({ message: "POST" });
 };
