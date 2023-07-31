@@ -12,7 +12,12 @@ import {
 import InboxRoundedIcon from "@mui/icons-material/InboxRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import { UIContext } from "../../context/ui/UIContext";
-const menuItems: string[] = ["Inbox", "Starred", "Send Email", "Drafts"];
+const menuItems: string[] = [
+  "Proximamente",
+  "Proximamente",
+  "Proximamente",
+  "Proximamente",
+];
 
 export const SideBar = () => {
   const { sidemenuOpen, closeSideMenu } = useContext(UIContext);
